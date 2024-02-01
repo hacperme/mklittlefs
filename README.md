@@ -1,17 +1,20 @@
 # mklittlefs
-Tool to build and unpack [littlefs](https://github.com/ARMmbed/littlefs) images.
-Based off of [mkspiffs](https://github.com/igrr/mkspiffs) by Ivan Grokhotkov.
+
+Tool to build and unpack [littlefs](https://github.com/ARMmbed/littlefs) images. Support littlefs v1.x.x and v2.x.x.
+Based off of [mklittlefs](https://github.com/earlephilhower/mklittlefs) by earlephilhower.
 
 ## Usage
 
 ```
-
-   mklittlefs  {-c <pack_dir>|-u <dest_dir>|-l|-i} [-d <0-5>] [-b <number>]
-               [-p <number>] [-s <number>] [--] [--version] [-h]
-               <image_file>
-
-
-Where: 
+mklittlefs-v1 or mklittlefs-v2
+                                        {-c <pack_dir>|-u <dest_dir>|-l}
+                                        [-T <from_file>] [-d <0-5>] [-a]
+                                        [-w <number>] [-r <number>] [-b
+                                        <number>] [-p <number>] [-s
+                                        <number>] [--] [--version] [-h]
+                                        <image_file>
+                                        
+Where:
 
    -c <pack_dir>,  --create <pack_dir>
      (OR required)  create littlefs image from a directory
@@ -21,11 +24,24 @@ Where:
          -- OR --
    -l,  --list
      (OR required)  list files in littlefs image
-         -- OR --
 
+
+   -T <from_file>,  --from-file <from_file>
+     when creating an image, include paths in from_file instead of scanning
+     pack_dir
 
    -d <0-5>,  --debug <0-5>
      Debug level. 0 means no debug output.
+
+   -a,  --all-files
+     when creating an image, include files which are normally ignored;
+     currently only applies to '.DS_Store' files and '.git' directories
+
+   -w <number>,  --prosize <number>
+     fs pro size, in bytes
+
+   -r <number>,  --readsize <number>
+     fs read_size, in bytes
 
    -b <number>,  --block <number>
      fs block size, in bytes
@@ -46,60 +62,23 @@ Where:
      Displays usage information and exits.
 
    <image_file>
-     (required)  LittleFS image file
-
-
+     (required)  littlefs image file
 ```
 ## Build
 
-You need gcc (≥4.8) or clang(≥600.0.57), and make. On Windows, use MinGW.
+You need gcc (≥4.8) or clang(≥600.0.57), and xmake. On Windows, use MinGW.
 
 Run:
 ```bash
 $ git submodule update --init
-$ make dist
+$ xmake
 ```
 
 On windows, use xmake and MinGW:
 
 ```bash
 $ xmake f -p mingw --sdk=E:\workspace\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r2\mingw64
-$ xmake -vD 
-```
-
-
-
-## LittleFS configuration
-
-Some LittleFS options which are set at mklittlefs build time affect the format of the generated filesystem image. Make sure such options are set to the same values when builing mklittlefs and when building the application which uses LittleFS.
-
-These options include:
-
-  - LFS_NAME_MAX
-  - possibly others
-
-To see the default values of these options, check `MAkefile` file in this repository.
-
-To override some options at build time, pass extra `CPPFLAGS` to `make`. You can also set `BUILD_CONFIG_NAME` variable to distinguish the built binary:
-
-```bash
-$ make clean
-$ make dist CPPFLAGS="-DLFS_NAME_MAX=128" BUILD_CONFIG_NAME=-custom
-```
-
-To check which options were set when building mklittlefs, use `--version` command:
-
-```
-$ mklittlefs --version
-
-./mklittlefs  version: 0.2.3-6-g9a0e072
-```
-
-## Cross-compiling
-
-To build for all cross compiled targets, run
-```
-docker run --user $(id -u):$(id -g) --rm -v $(pwd):/workdir earlephilhower/gcc-cross bash -c "cd /workdir; bash build-cross.sh"
+$ xmake
 ```
 
 
