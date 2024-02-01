@@ -60,6 +60,15 @@ $ git submodule update --init
 $ make dist
 ```
 
+On windows, use xmake and MinGW:
+
+```bash
+$ xmake f -p mingw --sdk=E:\workspace\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r2\mingw64
+$ xmake -vD 
+```
+
+
+
 ## LittleFS configuration
 
 Some LittleFS options which are set at mklittlefs build time affect the format of the generated filesystem image. Make sure such options are set to the same values when builing mklittlefs and when building the application which uses LittleFS.
