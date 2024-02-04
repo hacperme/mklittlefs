@@ -6,14 +6,11 @@ Based off of [mklittlefs](https://github.com/earlephilhower/mklittlefs) by earle
 ## Usage
 
 ```
-mklittlefs-v1 or mklittlefs-v2
-                                        {-c <pack_dir>|-u <dest_dir>|-l}
-                                        [-T <from_file>] [-d <0-5>] [-a]
-                                        [-w <number>] [-r <number>] [-b
-                                        <number>] [-p <number>] [-s
-                                        <number>] [--] [--version] [-h]
-                                        <image_file>
-                                        
+mklittlefs-v1 or mklittlefs-v2          {-c <pack_dir>|-u <dest_dir>|-l} 
+                                        [-T <from_file>] [-d <0-5>] [-a] [-w <number>] 
+                                        [-r <number>] [-b <number>] [-s <number>] [--] 
+                                        [--version] [-h] <image_file>
+
 Where:
 
    -c <pack_dir>,  --create <pack_dir>
@@ -46,9 +43,6 @@ Where:
    -b <number>,  --block <number>
      fs block size, in bytes
 
-   -p <number>,  --page <number>
-     fs page size, in bytes
-
    -s <number>,  --size <number>
      fs image size, in bytes
 
@@ -63,6 +57,7 @@ Where:
 
    <image_file>
      (required)  littlefs image file
+
 ```
 ## Build
 
